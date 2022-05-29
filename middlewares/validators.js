@@ -20,34 +20,10 @@ module.exports.regValidator = celebrate({
     name: Joi.string().required(),
     surname: Joi.string().required(),
     pass: Joi.string().required(),
-  }),
-});
-
-module.exports.creMovValidator = celebrate({
-  body: Joi.object().keys({
-    country: Joi.string().required(),
-    director: Joi.string().required(),
-    duration: Joi.number().required(),
-    year: Joi.string().required(),
-    description: Joi.string().required(),
-    image: Joi.string().required().custom(validateURL),
-    trailer: Joi.string().required().custom(validateURL),
-    thumbnail: Joi.string().required().custom(validateURL),
-    movieId: Joi.number().required(),
-    nameRU: Joi.string().required(),
-    nameEN: Joi.string().required(),
-  }),
-});
-
-module.exports.getMovValidator = celebrate({
-  params: Joi.object().keys({
-    movieId: Joi.string().length(24).hex(),
-  }),
-});
-
-module.exports.updatUserValidator = celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    name: Joi.string().min(2).max(30),
+    email: Joi.string().required(),
+    phone: Joi.string().required(),
+    company: Joi.string().required(),
+    jobpost: Joi.string().required(),
+    avatar: Joi.string().required(),
   }),
 });

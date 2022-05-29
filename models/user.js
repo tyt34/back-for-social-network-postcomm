@@ -11,6 +11,21 @@ const userSchema = new mongoose.Schema({
   pass: {
     type: String,
   },
+  email: {
+    type: String,
+  },
+  phone: {
+    type: String,
+  },
+  company: {
+    type: String,
+  },
+  jobpost: {
+    type: String,
+  },
+  avatar: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model('user', userSchema);

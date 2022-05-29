@@ -6,38 +6,22 @@ const WrongKeys = require('../errors/wrong-keys');
 const RepeatName = require('../errors/repeat-name');
 const NotNewInfo = require('../errors/not-new-info');
 
-function updateNewInfo(name, email, id, res, next) {
-  User.findByIdAndUpdate(
-    {
-      _id: id,
-    },
-    {
-      name,
-      email,
-    },
-    {
-      new: true,
-      runValidators: true,
-    },
-  )
-    .then((user) => {
-      if (!user) {
-        throw new NotFoundError();
-      }
-      return res.status(200).send(user);
-    })
-    .catch((err) => {
-      next(err);
-    });
-}
-
 module.exports.getUser = (req, res, next) => {
   User.findById(req.user._id)
     .then((user) => {
       if (!user) {
         throw new NotFoundError();
       }
-      return res.status(200).send({ data: user });
+      let {name, surname, email, phone, company, jobpost, avatar} = user
+      return res.status(200).send({
+        name,
+        surname,
+        email,
+        phone,
+        company,
+        jobpost,
+        avatar
+      });
     })
     .catch((err) => {
       if (err.name === 'CastError') {
@@ -48,23 +32,38 @@ module.exports.getUser = (req, res, next) => {
     });
 };
 
+
 module.exports.updateUser = (req, res, next) => {
-  const { name } = req.body;
-  const mail = req.body.email;
-  if ((name === undefined) && (mail === undefined)) {
-    throw new WrongKeys();
-  }
-  User.findOne({ email: mail })
+  let {name, surname, email, phone, company, jobpost, avatar} = req.body
+  console.log(' 1 ')
+  User.findOne({ name })
     .then((info) => {
+      console.log(' 2')
+      console.log(' ----------')
+      console.log(info)
+      console.log(name, surname, email, phone, company, jobpost, avatar)
+      console.log(' ----------')
       if (info === null) {
-        updateNewInfo(name, mail, req.user._id, res, next);
+        console.log(' 3')
+        updateNewInfo(name, surname, email, phone, company, jobpost, avatar, req.user._id, res, next);
       } else if ((req.user._id !== info._id.toString())) {
+        console.log(' 4')
         next(new RepeatName());
-      } else if ((info.name === name) && (info.email === mail)) {
+      } else if (
+        (info.name === name) &&
+        (info.surname === surname) &&
+        (info.email === email) &&
+        (info.phone === phone) &&
+        (info.company === company) &&
+        (info.jobpost === jobpost)
+      ) {
+        console.log(' 5')
         throw new NotNewInfo();
-      } else if (info.email === mail) {
-        updateNewInfo(name, mail, req.user._id, res, next);
+      } else if (info.email === email) {
+        console.log(' 6')
+        updateNewInfo(name, surname, email, phone, company, jobpost, avatar, req.user._id, res, next);
       } else {
+        console.log(' 7')
         next(new RepeatName());
       }
     })
@@ -78,3 +77,32 @@ module.exports.updateUser = (req, res, next) => {
       }
     });
 };
+
+function updateNewInfo(name, surname, email, phone, company, jobpost, avatar, id, res, next) {
+  console.log(' 8', id)
+  User.findByIdAndUpdate(
+    {
+      _id: id,
+    },
+    {
+      name, surname, email, phone, company, jobpost, avatar
+    },
+    {
+      new: true,
+      runValidators: true,
+    },
+  )
+    .then((user) => {
+      console.log(' 9', user)
+      if (!user) {
+        throw new NotFoundError();
+      }
+      let {name, surname, email, phone, company, jobpost, avatar} = user
+      return res.status(200).send({
+        name, surname, email, phone, company, jobpost, avatar
+      });
+    })
+    .catch((err) => {
+      next(err);
+    });
+}

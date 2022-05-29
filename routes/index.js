@@ -8,7 +8,8 @@ router.use('/', require('./app'));
 
 router.use(auth);
 router.use('/', require('./user'));
-router.use('/', require('./movie'));
+router.use('/', require('./message'));
+//router.use('/', require('./movie'));
 
 router.use(() => {
   throw new NotFoundAddress();

@@ -16,24 +16,32 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 module.exports.register = (req, res, next) => {
+  console.log(' => ')
   const {
-    name, surname, pass,
+    name, surname, pass, email, phone, company, jobpost, avatar
   } = req.body;
   bcrypt.hash(req.body.pass, 11)
     .then((hash) => User.create({
       name,
       surname,
       pass: hash,
+      email,
+      phone,
+      company,
+      jobpost,
+      avatar
     }))
     .then((user) => {
       if (!user) {
         throw new ValidationError();
       }
+      const token = jwt.sign({ _id: user._id }, soup, { expiresIn: '7d' });
       return res.status(200).send({
         data: {
           name, surname,
         },
-        status: 'ok'
+        status: 'ok',
+        token: token,
       });
     })
     .catch((err) => {
