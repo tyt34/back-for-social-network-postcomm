@@ -82,6 +82,7 @@ module.exports.login = (req, res, next) => {
       res.send(
         {
           token: token,
+          userId: user._id,
           status: 'ok',
           user: {
             name: user.name,

@@ -32,22 +32,37 @@ module.exports.getUser = (req, res, next) => {
     });
 };
 
+module.exports.getAva = (req, res, next) => {
+  User.find({ _id: req.params.userId })
+  .then((mess) => {
+    console.log(mess)
+    return res.status(200).send({
+      avatar: mess[0].avatar,
+      status: 'ok',
+    });
+  })
+  .catch(next);
+}
+
+module.exports.getAllUsers = (req, res, next) => {
+  User.find({ })
+  .then((mess) => {
+    return res.status(200).send({
+      users: mess,
+      status: 'ok',
+    });
+  })
+  .catch(next);
+}
 
 module.exports.updateUser = (req, res, next) => {
   let {name, surname, email, phone, company, jobpost, avatar} = req.body
-  console.log(' 1 ')
   User.findOne({ name })
     .then((info) => {
-      console.log(' 2')
-      console.log(' ----------')
-      console.log(info)
-      console.log(name, surname, email, phone, company, jobpost, avatar)
-      console.log(' ----------')
       if (info === null) {
         console.log(' 3')
         updateNewInfo(name, surname, email, phone, company, jobpost, avatar, req.user._id, res, next);
       } else if ((req.user._id !== info._id.toString())) {
-        console.log(' 4')
         next(new RepeatName());
       } else if (
         (info.name === name) &&
@@ -57,13 +72,10 @@ module.exports.updateUser = (req, res, next) => {
         (info.company === company) &&
         (info.jobpost === jobpost)
       ) {
-        console.log(' 5')
         throw new NotNewInfo();
       } else if (info.email === email) {
-        console.log(' 6')
         updateNewInfo(name, surname, email, phone, company, jobpost, avatar, req.user._id, res, next);
       } else {
-        console.log(' 7')
         next(new RepeatName());
       }
     })
@@ -79,7 +91,6 @@ module.exports.updateUser = (req, res, next) => {
 };
 
 function updateNewInfo(name, surname, email, phone, company, jobpost, avatar, id, res, next) {
-  console.log(' 8', id)
   User.findByIdAndUpdate(
     {
       _id: id,
@@ -93,7 +104,6 @@ function updateNewInfo(name, surname, email, phone, company, jobpost, avatar, id
     },
   )
     .then((user) => {
-      console.log(' 9', user)
       if (!user) {
         throw new NotFoundError();
       }
