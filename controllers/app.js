@@ -86,6 +86,7 @@ module.exports.login = (req, res, next) => {
           status: 'ok',
           user: {
             name: user.name,
+            surname: user.surname
           }
         }
       );

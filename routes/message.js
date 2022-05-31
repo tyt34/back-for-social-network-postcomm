@@ -3,7 +3,8 @@ const {
   createMes,
   getAllMes,
   getMesProf,
-  getMesUser
+  getMesUser,
+  getPost
 } = require('../controllers/message');
 
 /*
@@ -17,6 +18,7 @@ router.post('/createMes', createMes);
 router.get('/getAllMes/:userId', getAllMes);
 router.get('/getmesprof', getMesProf);
 router.get('/getMesUser/:nameUser', getMesUser);
+router.get('/getpost/:idPost', getPost);
 
 
 module.exports = router;

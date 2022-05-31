@@ -9,6 +9,7 @@ router.use('/', require('./app'));
 router.use(auth);
 router.use('/', require('./user'));
 router.use('/', require('./message'));
+router.use('/', require('./comment'));
 //router.use('/', require('./movie'));
 
 router.use(() => {
