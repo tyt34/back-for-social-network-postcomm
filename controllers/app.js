@@ -16,7 +16,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 module.exports.register = (req, res, next) => {
-  console.log(' => ')
   const {
     name, surname, pass, email, phone, company, jobpost, avatar
   } = req.body;
@@ -65,7 +64,6 @@ module.exports.login = (req, res, next) => {
       if (!user) {
         return Promise.reject(new WrongPass());
       }
-      //console.log(' -> ')
       return bcrypt.compare(pass, user.pass)
         .then((matched) => {
           if (!matched) {

@@ -26,10 +26,8 @@ module.exports.createMes = (req, res, next) => {
 };
 
 module.exports.getAllMes = (req, res, next) => {
-  //console.log(' getAllMes ', req.params.userId)
   Message.find({ owner: req.params.userId })
   .then((mess) => {
-    //console.log(mess)
     return res.status(200).send({
       data: mess,
       status: 'ok',
@@ -39,15 +37,10 @@ module.exports.getAllMes = (req, res, next) => {
 }
 
 module.exports.getMesUser = (req, res, next) => {
-  //console.log(' getMesUser ', req.params.nameUser)
-  // надо найти id пользователя по имени
   User.find({ name: req.params.nameUser })
   .then((mess) => {
-    //console.log(' find user:', mess)
-    //console.log(' id user: ', mess[0]._id)
     Message.find({ owner: mess[0]._id })
     .then((mess) => {
-      //console.log(mess)
       return res.status(200).send({
         data: mess,
         status: 'ok',
@@ -56,25 +49,11 @@ module.exports.getMesUser = (req, res, next) => {
     .catch(next);
   })
   .catch(next);
-  /*
-  // надо найти сообщения пользователя по id
-  Message.find({ name: req.params.nameUser })
-  .then((mess) => {
-    console.log(mess)
-    return res.status(200).send({
-      data: mess,
-      status: 'ok',
-    });
-  })
-  .catch(next);
-  */
 }
 
 module.exports.getMesProf = (req, res, next) => {
-  //console.log(' getMesProf ', req.user._id)
   Message.find({ owner: req.user._id })
   .then((mess) => {
-    //console.log(mess)
     return res.status(200).send({
       data: mess,
       status: 'ok',
@@ -84,10 +63,8 @@ module.exports.getMesProf = (req, res, next) => {
 }
 
 module.exports.getPost = (req, res, next) => {
-  //console.log(' getPost ', req.params.idPost)
   Message.find({ _id: req.params.idPost })
   .then((mess) => {
-    //console.log(mess)
     return res.status(200).send({
       data: mess,
       status: 'ok',

@@ -12,7 +12,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 module.exports = (req, res, next) => {
-  //console.log(' --> ')
   const { authorization } = req.headers;
   if (!authorization || !authorization.startsWith('Bearer ')) {
     next(new NeedAuth());
