@@ -1,14 +1,14 @@
 class ValidationError extends Error {
   constructor(mess) {
-    super();
-    this.statusCode = 400;
+    super()
+    this.statusCode = 400
     if (mess === '') {
-      this.message = 'Некорректные данные!';
+      this.message = 'Некорректные данные!'
     } else {
-      this.message = mess;
+      this.message = mess
     }
-    this.name = 'ValidationError';
+    this.name = 'ValidationError'
   }
 }
 
-module.exports = ValidationError;
+module.exports = ValidationError

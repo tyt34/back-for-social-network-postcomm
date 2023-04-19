@@ -30,6 +30,7 @@
     "express-rate-limit": "^5.5.1",
     "express-winston": "^4.2.0",
     "jsonwebtoken": "^8.5.1",
+    "lowdb": "^6.0.0",
     "mongoose": "^6.0.13",
     "validator": "^13.7.0",
     "winston": "^3.3.3"
@@ -38,6 +39,7 @@
     "eslint": "^8.2.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.3",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "prettier": "2.8.7"
   }
 }

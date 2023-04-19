@@ -6,17 +6,17 @@
 ![](https://shields.io/badge/-Express.JS-384752)
 
 ## Функциональность
-* Регистрация и авторизация нового пользователя.
-* Изменение данных созданного пользователя.
-* В приложение присутствует валидация входных данных.
-* Это backend часть приложения "Postcomm". Frontend часть приложения находится [по этой ссылке](https://github.com/tyt34/postcomm). 
+
+- Регистрация и авторизация нового пользователя.
+- Изменение данных созданного пользователя.
+- В приложение присутствует валидация входных данных.
+- Это backend часть приложения "Postcomm". Frontend часть приложения находится [по этой ссылке](https://github.com/tyt34/postcomm).
 
 ## API
 
 ### Регистрация, авторизация и редактирование данных пользователя
 
-* `POST /reg` — создать нового пользователя. В теле запроса должен быть `name`, `surname`, `pass`, `email`, `phone`, `company`, `jobpost` и `avatar`. Формат ответа: 
-
+- `POST /reg` — создать нового пользователя. В теле запроса должен быть `name`, `surname`, `pass`, `email`, `phone`, `company`, `jobpost` и `avatar`. Формат ответа:
 
 ```ts
 {
@@ -29,7 +29,8 @@
 }
 ```
 
-* `POST /log` — авторизовать зарегистрированного пользователя. В теле запроса должен быть `name` и `pass`. Формат ответа: 
+- `POST /log` — авторизовать зарегистрированного пользователя. В теле запроса должен быть `name` и `pass`. Формат ответа:
+
 ```ts
 {
     "token": "jwt_tokken",
@@ -42,7 +43,8 @@
 }
 ```
 
-* `PATCH /updateUser` — изменить поля *name*, *surname*, *email*, *phone*, *company*, *jobpost* и *avatar* пользователя. Необходим заголовок `authorization: Bearer jwt_tokken`. В теле запроса должен быть `name`, `surname`, `email`, `phone`, `company`, `jobpost` и `avatar`. Формат ответа: 
+- `PATCH /updateUser` — изменить поля _name_, _surname_, _email_, _phone_, _company_, _jobpost_ и _avatar_ пользователя. Необходим заголовок `authorization: Bearer jwt_tokken`. В теле запроса должен быть `name`, `surname`, `email`, `phone`, `company`, `jobpost` и `avatar`. Формат ответа:
+
 ```ts
 {
     "name": "name пользователя",
@@ -55,7 +57,8 @@
 }
 ```
 
-* `GET /getUser` — получить данные авторизованного пользователя. Необходим заголовок `authorization: Bearer jwt_tokken`. Формат ответа: 
+- `GET /getUser` — получить данные авторизованного пользователя. Необходим заголовок `authorization: Bearer jwt_tokken`. Формат ответа:
+
 ```ts
 {
     "name": "name пользователя",
@@ -68,7 +71,8 @@
 }
 ```
 
-* `GET /getmesprof` — получить все посты авторизованного пользователя. Необходим заголовок `authorization: Bearer jwt_tokken`. Формат ответа: 
+- `GET /getmesprof` — получить все посты авторизованного пользователя. Необходим заголовок `authorization: Bearer jwt_tokken`. Формат ответа:
+
 ```ts
 {
     "data": [
@@ -87,7 +91,8 @@
 
 ### Создание поста
 
-* `POST /createmes` — создать пост от имени авторизованного пользователя. Необходим заголовок `authorization: Bearer jwt_tokken`. В теле запроса должен быть `header`, `text`, `dateText` и `dateUTC`. Формат ответа: 
+- `POST /createmes` — создать пост от имени авторизованного пользователя. Необходим заголовок `authorization: Bearer jwt_tokken`. В теле запроса должен быть `header`, `text`, `dateText` и `dateUTC`. Формат ответа:
+
 ```ts
 {
     "data": {
@@ -107,17 +112,18 @@
 
 ### Создание комментария
 
-* `POST /createcomment` — создать комментарий от имени авторизованного пользователя под указанным постом. Необходим заголовок `authorization: Bearer jwt_tokken`. В теле запроса должен быть `idPost`, `comment`, `dateText` и `dateUTC`. Формат ответа: 
+- `POST /createcomment` — создать комментарий от имени авторизованного пользователя под указанным постом. Необходим заголовок `authorization: Bearer jwt_tokken`. В теле запроса должен быть `idPost`, `comment`, `dateText` и `dateUTC`. Формат ответа:
+
 ```ts
 {
     "status": "ok"
 }
 ```
 
-### Общие данные 
+### Общие данные
 
+- `GET /getmesuser/:nameUser` — получить все посты определенного пользователя. Необходим заголовок `authorization: Bearer jwt_tokken`. Формат ответа:
 
-* `GET /getmesuser/:nameUser` — получить все посты определенного пользователя. Необходим заголовок `authorization: Bearer jwt_tokken`. Формат ответа: 
 ```ts
 {
     "data": [
@@ -135,7 +141,8 @@
 }
 ```
 
-* `GET /getava/:idUser` — получить все данные определенного пользователя. Необходим заголовок `authorization: Bearer jwt_tokken`. Формат ответа: 
+- `GET /getava/:idUser` — получить все данные определенного пользователя. Необходим заголовок `authorization: Bearer jwt_tokken`. Формат ответа:
+
 ```ts
 {
     "name": "name пользователя",
@@ -148,7 +155,8 @@
 }
 ```
 
-* `GET /getpost/:idPost` — получить данные определенного поста. Необходим заголовок `authorization: Bearer jwt_tokken`. Формат ответа: 
+- `GET /getpost/:idPost` — получить данные определенного поста. Необходим заголовок `authorization: Bearer jwt_tokken`. Формат ответа:
+
 ```ts
 {
     "data": {
@@ -166,7 +174,8 @@
 }
 ```
 
-* `GET /getallusers` — получить данные всех зарегистрированных пользователей. Необходим заголовок `authorization: Bearer jwt_tokken`. Формат ответа: 
+- `GET /getallusers` — получить данные всех зарегистрированных пользователей. Необходим заголовок `authorization: Bearer jwt_tokken`. Формат ответа:
+
 ```ts
 {
     "users": [
@@ -186,8 +195,8 @@
 }
 ```
 
+- `GET /getcomments/:idPost` — получить все комментарии указанного поста. Необходим заголовок `authorization: Bearer jwt_tokken`. Формат ответа:
 
-* `GET /getcomments/:idPost` — получить все комментарии указанного поста. Необходим заголовок `authorization: Bearer jwt_tokken`. Формат ответа: 
 ```ts
 {
     "data": [
@@ -206,9 +215,9 @@
 }
 ```
 
-
 ## Запуск приложения
+
 1. npm i
 2. npm run start
 
-- Не забудьте запустить frontend часть, которая находится [по этой ссылке](https://github.com/tyt34/postcomm). 
+- Не забудьте запустить frontend часть, которая находится [по этой ссылке](https://github.com/tyt34/postcomm).

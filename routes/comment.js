@@ -1,8 +1,5 @@
-const router = require('express').Router();
-const {
-  createComment,
-  getComments
-} = require('../controllers/comment');
+const router = require('express').Router()
+const { createComment, getComments } = require('../controllers/comment')
 
 /*
 const {
@@ -11,8 +8,7 @@ const {
 */
 //router.post('/log', login);
 
-router.post('/createComment', createComment);
-router.get('/getComments/:postID', getComments);
+router.post('/createComment', createComment)
+router.get('/getComments/:postID', getComments)
 
-
-module.exports = router;
+module.exports = router

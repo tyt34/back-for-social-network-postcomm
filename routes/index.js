@@ -1,19 +1,19 @@
-const express = require('express');
-const auth = require('../middlewares/auth');
-const NotFoundAddress = require('../errors/not-found-address');
+const express = require('express')
+const auth = require('../middlewares/auth')
+const NotFoundAddress = require('../errors/not-found-address')
 
-const router = express.Router();
+const router = express.Router()
 
-router.use('/', require('./app'));
+router.use('/', require('./app'))
 
-router.use(auth);
-router.use('/', require('./user'));
-router.use('/', require('./message'));
-router.use('/', require('./comment'));
+router.use(auth)
+router.use('/', require('./user'))
+router.use('/', require('./message'))
+router.use('/', require('./comment'))
 //router.use('/', require('./movie'));
 
 router.use(() => {
-  throw new NotFoundAddress();
-});
+  throw new NotFoundAddress()
+})
 
-module.exports = router;
+module.exports = router

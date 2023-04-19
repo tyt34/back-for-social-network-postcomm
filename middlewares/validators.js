@@ -1,19 +1,19 @@
-const validator = require('validator');
-const { celebrate, Joi } = require('celebrate');
+const validator = require('validator')
+const { celebrate, Joi } = require('celebrate')
 
 const validateURL = (value) => {
   if (!validator.isURL(value, { require_protocol: true })) {
-    throw new Error('Неправильный формат ссылки');
+    throw new Error('Неправильный формат ссылки')
   }
-  return value;
-};
+  return value
+}
 
 module.exports.logValidator = celebrate({
   body: Joi.object().keys({
     name: Joi.string().required(),
-    pass: Joi.string().required(),
-  }),
-});
+    pass: Joi.string().required()
+  })
+})
 
 module.exports.regValidator = celebrate({
   body: Joi.object().keys({
@@ -24,6 +24,6 @@ module.exports.regValidator = celebrate({
     phone: Joi.string().required(),
     company: Joi.string().required(),
     jobpost: Joi.string().required(),
-    avatar: Joi.string().required(),
-  }),
-});
+    avatar: Joi.string().required()
+  })
+})

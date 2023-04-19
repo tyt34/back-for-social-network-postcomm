@@ -1,11 +1,11 @@
-const router = require('express').Router();
+const router = require('express').Router()
 const {
   createMes,
   getAllMes,
   getMesProf,
   getMesUser,
   getPost
-} = require('../controllers/message');
+} = require('../controllers/message')
 
 /*
 const {
@@ -14,11 +14,10 @@ const {
 */
 //router.post('/log', login);
 
-router.post('/createMes', createMes);
-router.get('/getAllMes/:userId', getAllMes);
-router.get('/getmesprof', getMesProf);
-router.get('/getMesUser/:nameUser', getMesUser);
-router.get('/getpost/:idPost', getPost);
+router.post('/createMes', createMes)
+router.get('/getAllMes/:userId', getAllMes)
+router.get('/getmesprof', getMesProf)
+router.get('/getMesUser/:nameUser', getMesUser)
+router.get('/getpost/:idPost', getPost)
 
-
-module.exports = router;
+module.exports = router
