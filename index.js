@@ -4,6 +4,41 @@ const { errors } = require('celebrate')
 const cors = require('cors')
 const routes = require('./routes/index')
 const { requestLogger, errorLogger } = require('./middlewares/logger')
+// import { Low } from 'lowdb'
+// import { JSONFile } from 'lowdb/node'
+// const JSONFile = require('lowdb/node')
+// const db = new Low(new JSONFile('./database/database.JSON'), {})
+// const Low = require('lowdb')
+// const FileSync = require('lowdb/adapters/FileSync')
+// const adapter = new FileSync('./database/database.JSON')
+// const db = low(adapter)
+
+const Datastore = require('nedb')
+const db = new Datastore({
+  filename: './database/database.JSON',
+  autoload: true
+  // corruptAlertThreshold: 1
+})
+// console.log({ db })
+
+// const user = { name: 'John', age: 30 }
+
+// db.insert(user, (err, newDoc) => {
+//   if (err) {
+//     console.error(err)
+//   } else {
+//     console.log('User added:', newDoc)
+//   }
+// })
+
+// db.find({ name: 'John' }, (err, docs) => {
+//   if (err) {
+//     console.error(err)
+//   } else {
+//     console.log('Found users:', docs)
+//   }
+// })
+
 require('dotenv').config()
 
 // let nameDb;
@@ -13,7 +48,6 @@ require('dotenv').config()
 // } else {
 //   nameDb = databaseURL;
 // }
-
 const { PORT = 3001 } = process.env
 const app = express()
 
