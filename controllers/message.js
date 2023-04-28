@@ -38,30 +38,48 @@ module.exports.createMes = (req, res, next) => {
   )
 }
 
-module.exports.getAllMes = (req, res, next) => {
-  Message.find({ owner: req.params.userId })
-    .then((mess) => {
-      return res.status(200).send({
-        data: mess,
-        status: 'ok'
-      })
-    })
-    .catch(next)
-}
+// module.exports.getAllMes = (req, res, next) => {
+//   db.find(
+//     { type: 'message' },
+//     { pass: -1, type: -1 },
+//     (err, messages) => {
+//       console.log({ err, messages })
+//       return res.status(200).send({
+//         messages,
+//         status: 'ok'
+//       })
+//     }
+//   )
+//   /* Message.find({ owner: req.params.userId })
+//     .then((mess) => {
+//       return res.status(200).send({
+//         data: mess,
+//         status: 'ok'
+//       })
+//     })
+//     .catch(next) */
+// }
 
 module.exports.getMesUser = (req, res, next) => {
-  User.find({ name: req.params.nameUser })
-    .then((mess) => {
-      Message.find({ owner: mess[0]._id })
-        .then((mess) => {
-          return res.status(200).send({
-            data: mess,
-            status: 'ok'
-          })
+  const findUser = req.params.nameUser
+  console.log({ findUser })
+  console.log(' get message user ')
+
+  db.findOne({ name: findUser }, (err, user) => {
+    console.log({ user })
+
+    db.find(
+      { type: 'message', owner: user._id },
+      { pass: -1, type: -1 },
+      (err, messages) => {
+        console.log({ err, l: messages.length })
+        return res.status(200).send({
+          data: messages,
+          status: 'ok'
         })
-        .catch(next)
-    })
-    .catch(next)
+      }
+    )
+  })
 }
 
 module.exports.getMesProf = (req, res, next) => {
