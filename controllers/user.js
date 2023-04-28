@@ -8,13 +8,15 @@ const NotNewInfo = require('../errors/not-new-info')
 const { db } = require('../db.js')
 
 module.exports.getUser = (req, res, next) => {
-  User.findById(req.user._id)
-    .then((user) => {
-      if (!user) {
-        throw new NotFoundError()
-      }
-      let { name, surname, email, phone, company, jobpost, avatar } =
+  const idUser = req.user._id
+  console.log({ idUser })
+
+  db.findOne({ _id: idUser }, { pass: -1, type: -1 }, (err, user) => {
+    console.log({ user })
+    try {
+      const { name, surname, email, phone, company, jobpost, avatar } =
         user
+
       return res.status(200).send({
         name,
         surname,
@@ -24,14 +26,11 @@ module.exports.getUser = (req, res, next) => {
         jobpost,
         avatar
       })
-    })
-    .catch((err) => {
-      if (err.name === 'CastError') {
-        next(new CastError())
-      } else {
-        next(err)
-      }
-    })
+    } catch (error) {
+      console.log(' --> ', error)
+      next(new ValidationError())
+    }
+  })
 }
 
 module.exports.getAva = (req, res, next) => {
