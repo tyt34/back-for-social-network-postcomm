@@ -13,12 +13,12 @@ const { requestLogger, errorLogger } = require('./middlewares/logger')
 // const adapter = new FileSync('./database/database.JSON')
 // const db = low(adapter)
 
-const Datastore = require('nedb')
-const db = new Datastore({
-  filename: './database/database.JSON',
-  autoload: true
-  // corruptAlertThreshold: 1
-})
+// const Datastore = require('nedb')
+// const db = new Datastore({
+//   filename: './database/database.JSON',
+//   autoload: true
+//   // corruptAlertThreshold: 1
+// })
 // console.log({ db })
 
 // const user = { name: 'John', age: 30 }

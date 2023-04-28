@@ -5,12 +5,7 @@ const WrongPass = require('../errors/wrong-pass')
 const RepeatName = require('../errors/repeat-name')
 const WrongKeys = require('../errors/wrong-keys')
 const { jwtNotSecret } = require('../configBackend')
-const Datastore = require('nedb')
-const db = new Datastore({
-  filename: './database/database.JSON',
-  autoload: true
-  // corruptAlertThreshold: 1
-})
+const { db } = require('../db.js')
 
 let soup
 
@@ -36,6 +31,7 @@ module.exports.register = (req, res, next) => {
   console.log(' --> check in db')
 
   db.find({ name, surname }, (err, user) => {
+    console.log({ user })
     if (!user.length) {
       bcrypt
         .hash(pass, 11)
@@ -48,14 +44,15 @@ module.exports.register = (req, res, next) => {
             phone,
             company,
             jobpost,
-            avatar
+            avatar,
+            type: 'user'
           }
-          db.insert(user, (err, newDoc) => {
+          db.insert(user, (err, newUser) => {
             if (err) {
               console.error(err)
             } else {
-              console.log('User added:', newDoc.name)
-              const token = jwt.sign({ _id: user._id }, soup, {
+              console.log('User added:', newUser.name)
+              const token = jwt.sign({ _id: newUser._id }, soup, {
                 expiresIn: '7d'
               })
               return res.status(200).send({
