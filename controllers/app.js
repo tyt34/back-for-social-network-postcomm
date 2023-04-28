@@ -92,48 +92,44 @@ module.exports.login = (req, res, next) => {
   }
   console.log({ name, pass })
 
-  db.find({ name, pass }, (err, docs) => {
-    if (err) {
-      console.error(err)
-      return Promise.reject(new WrongPass())
+  db.find({ name }, (err, users) => {
+    console.log({ err, l: users.length })
+    if (users.length) {
+      console.log('Found users:', users)
+      console.log(' p: ', users[0].pass)
+
+      bcrypt
+        .compare(pass, users[0].pass)
+        .then((matched) => {
+          console.log({ matched })
+          if (matched) {
+            console.log(' USER TRUE ')
+            const token = jwt.sign({ _id: users[0]._id }, soup, {
+              expiresIn: '7d'
+            })
+            console.log({ token })
+            res.send({
+              token: token,
+              userId: users[0]._id,
+              status: 'ok',
+              user: {
+                name: users[0].name,
+                surname: users[0].surname
+              }
+            })
+          } else {
+            next(new WrongPass())
+          }
+        })
+        .catch((er) => {
+          /**
+           * Я не знаю какая тут может быть ошибка
+           */
+          console.log({ er })
+          next(new WrongPass())
+        })
     } else {
-      console.log('Found users:', docs)
+      next(new WrongPass())
     }
   })
-
-  /*
-  User.findOne({ name })
-    .select('+pass')
-    .then((user) => {
-      if (!user) {
-        return Promise.reject(new WrongPass())
-      }
-      return bcrypt.compare(pass, user.pass).then((matched) => {
-        if (!matched) {
-          return Promise.reject(new WrongPass())
-        }
-        return user
-      })
-    })
-    .then((user) => {
-      if (!user) {
-        Promise.reject(new WrongPass())
-      }
-      const token = jwt.sign({ _id: user._id }, soup, {
-        expiresIn: '7d'
-      })
-      res.send({
-        token: token,
-        userId: user._id,
-        status: 'ok',
-        user: {
-          name: user.name,
-          surname: user.surname
-        }
-      })
-    })
-    .catch(() => {
-      next(new WrongPass())
-    })
-    */
 }

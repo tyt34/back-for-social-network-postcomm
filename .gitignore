@@ -1,2 +1,5 @@
 /node_modules
 .env
+/database
+request.log
+error.log
