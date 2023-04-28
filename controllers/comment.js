@@ -1,4 +1,5 @@
 const Comment = require('../models/comment')
+const { db } = require('../db.js')
 
 module.exports.createComment = (req, res, next) => {
   const { idPost, comment, dateText, dateUTC } = req.body

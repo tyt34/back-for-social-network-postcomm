@@ -1,26 +1,41 @@
-const Message = require('../models/message')
-const User = require('../models/user')
+const { db } = require('../db.js')
 
 module.exports.createMes = (req, res, next) => {
   const { header, text, dateText, dateUTC } = req.body
-  Message.create({
-    header,
-    text,
-    dateText,
-    dateUTC,
-    owner: req.user._id
-  })
-    .then((user) => {
-      return res.status(200).send({
-        data: {
-          user
-        },
-        status: 'ok'
-      })
-    })
-    .catch((err) => {
-      next(err)
-    })
+  const idUser = req.user._id
+  console.log({ idUser, header, text, dateText, dateUTC })
+
+  db.insert(
+    {
+      type: 'message',
+      owner: idUser,
+      header,
+      text,
+      dateText,
+      dateUTC
+    },
+    (err, newMessage) => {
+      console.log({ newMessage })
+      if (err) {
+        next(err)
+      } else {
+        console.log('Message added:', newMessage.header)
+        return res.status(200).send({
+          data: {
+            message: {
+              header,
+              text,
+              dateText,
+              dateUTC,
+              owner: idUser,
+              _id: newMessage._id
+            }
+          },
+          status: 'ok'
+        })
+      }
+    }
+  )
 }
 
 module.exports.getAllMes = (req, res, next) => {
